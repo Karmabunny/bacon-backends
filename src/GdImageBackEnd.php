@@ -163,11 +163,17 @@ class GdImageBackEnd implements ImageBackEndInterface
                 imagefilledpolygon($this->image, $points, $num, $color);
 
                 // debug
-                // $font = '/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf';
-                // $bits = array_chunk($points, 2);
-                // foreach ($bits as $i => [$x, $y]) {
-                //     imagettftext($this->image, 6, 0, $x, $y, $color, $font, "{$j}:$i");
-                // }
+                if ($this->debug) {
+                    $color = $this->invertColor($color);
+                    $j = ($j ?? -1) + 1;
+                    $size = 8;
+
+                    $font = '/usr/share/fonts/truetype/open-sans/OpenSans-Regular.ttf';
+                    $bits = array_chunk($points, 2);
+                    foreach ($bits as $i => [$x, $y]) {
+                        imagettftext($this->image, $size, 0, $x + 1, $y + $size, $color, $font, "{$j}:$i");
+                    }
+                }
 
                 $points = [];
                 continue;
@@ -211,6 +217,31 @@ class GdImageBackEnd implements ImageBackEndInterface
         $color |= $rgb->getRed() << 16;
         $color |= $rgb->getGreen() << 8;
         $color |= $rgb->getBlue();
+
+        return $color;
+    }
+
+
+    /**
+     * Invert a GD color.
+     *
+     * @param int $color
+     * @return int
+     */
+    protected function invertColor(int $color): int
+    {
+        $r = ($color >> 16) & 0xFF;
+        $g = ($color >> 8) & 0xFF;
+        $b = $color & 0xFF;
+
+        $r = 255 - $r;
+        $g = 255 - $g;
+        $b = 255 - $b;
+
+        $color = 0;
+        $color |= $r << 16;
+        $color |= $g << 8;
+        $color |= $b;
 
         return $color;
     }
