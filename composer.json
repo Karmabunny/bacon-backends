@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^1.8"
+        "phpstan/phpstan": "^1.8",
+        "khanamiryan/qrcode-detector-decoder": "1.0.3"
     },
     "scripts": {
         "tests": "phpunit --testdox tests",
