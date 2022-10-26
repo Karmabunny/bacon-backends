@@ -38,7 +38,7 @@ class GdImageBackEnd implements ImageBackEndInterface
     /** @var float */
     protected $scale = 1.0;
 
-    /** @var int[] [x, y] */
+    /** @var float[] [x, y] */
     protected $shift = [0, 0];
 
     /** @var bool */
@@ -152,7 +152,7 @@ class GdImageBackEnd implements ImageBackEndInterface
                 if (empty($points)) continue;
 
                 [$x, $y] = $points;
-                $at = imagecolorat($this->image, $x, $y);
+                $at = imagecolorat($this->image, (int) round($x), (int) round($y));
 
                 $color =
                     ($at == $fg_color)

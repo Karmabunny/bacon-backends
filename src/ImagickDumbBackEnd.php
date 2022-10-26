@@ -155,8 +155,7 @@ class ImagickDumbBackEnd implements ImageBackEndInterface
         }
 
         if ($this->debug) {
-            $status = $res ? proc_get_status($res) : null;
-            echo json_encode($status, JSON_PRETTY_PRINT), "\n";
+            echo json_encode(@proc_get_status($res), JSON_PRETTY_PRINT), "\n";
         }
 
         try {
